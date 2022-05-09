@@ -3,12 +3,15 @@
 # Author: Jean Shin (jean.shin@sickkids.ca)
 # Note: some scripts are adapted from ENIGMA Brain age GWAS project
 # 2. Association tests between WMH and cortical thickness across 34 regions
+#
+#
+# ****SPECIFY INPUT FILE HERE:
+#
+input_specification_file=
+#
 #-----------------------------------------------------------------------------#
 
 #source the input-specification file ------------------------------------------
-#*** SPECIFY INPUT FILE HERE ***#
-input_specification_file=
-
 # need to think about what to do
 op <- options(nwarnings = 10000)
 setwd("./") #current directory
