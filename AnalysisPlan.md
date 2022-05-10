@@ -92,4 +92,15 @@ Pausova (<jean.shin@sickkids.ca>)
 
 2.  Format the GWAS result file with the following column names:
 
-    <img src="/Users/jshin/Library/CloudStorage/OneDrive-SickKids/neuroCHARGE_WMH_ctxTH_age/WMH_ctxTH/Example/ExampleTableB.png" alt="MarineGEO circle logo" style="height: 300px; width:300px;"/>
+| Column header     | Description                                                     |
+|-------------------|-----------------------------------------------------------------|
+| ID                | The dbSNP or 1000 Genome Project ID number                      |
+| CHROM             | Chromosome number                                               |
+| POS               | Base pair position of SNP on the chromosome, Build 37 (or hg19) |
+| CODED_ALLELE      | Allele for which the effect has been estimated                  |
+| NON_CODED_ALLELE  | Non-coded allele                                                |
+| CODED_ALLELE_FREQ | Allele frequency of the coded allele                            |
+| N                 | Number of individuals used in the test                          |
+| BETA              | Effect size estimate for the coded allele                       |
+| SE                | Standard error of the effect size estimate                      |
+| P                 | P-value of the effect size                                      |
