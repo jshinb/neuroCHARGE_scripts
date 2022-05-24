@@ -75,8 +75,8 @@ cov_required = c('age','sex','hypertension','current_smoking','type2diabetes',"I
 cov_study_specific = setdiff(names(covariate_names),cov_required)
 for(roii in roi.34){
   analdati = subset(d,select=c(roii,'WMH','ICVorBrainVolume','age.c','age.c2','sex','hypertension','current_smoking','type2diabetes',cov_study_specific))
-  analdati[['y']] <- rntransform(analdati[[paste(roii,sep=".")]])
-  analdati[['WMH']] <- rntransform(analdati[["WMH"]])
+  analdati[['y']] <- inormal(analdati[[paste(roii,sep=".")]])
+  analdati[['WMH']] <- inormal(analdati[["WMH"]])
   analdati <- analdati %>% mutate(ICVorBrainVolume = scale(ICVorBrainVolume)[,1]/2)
   mod0 = paste0(c('WMH','age.c','age.c2','hypertension','current_smoking','type2diabetes','ICVorBrainVolume',cov_study_specific),collapse = " + ")
   mod0 = paste("y ~ sex*(",mod0,")",sep="")

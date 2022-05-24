@@ -44,8 +44,7 @@ pacman::p_load(tidyverse, data.table, psych,
 
 # source functions ------------------------------------------------------------
 cat("Prep: sourcing functions\n")
-source("functions_GenABEL_rntransform.R")
-source("functions_get_adj_ctxTH_WMH.R")
+source("0_functions_get_adj_ctxTH_WMH.R")
 
 # step1: ----------------------------------------------------------------
 source("1_DataWrangle.R")
