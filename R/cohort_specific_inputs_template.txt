@@ -1,8 +1,10 @@
 # ----- COHORT-SPECIFIC INFORMATION ---------------------------------------------------- #
 # Analyst/PI information for contact
+#----------------------------------------------------------------------------------------#
 analyst = 
 analyst_email = 
 analysis_date =      # YYYY-MM-DD
+analyst_googleID = # required for uploading results to CHARGE google Drive
 PI = 
 PI_email = 
 #
@@ -15,22 +17,31 @@ WMH_based_on =       # T2, T2* or T1
 # -----  FILES ------------------------------------------------------------------------- #
 # data file names: missing values must be coded as **NA**
 #
-# Brain outcome file  (1 file)
+# Brain phenotype file  (1 file)
+# FreeSurfer-parcellated regions and left and right hemispheres, and WMH
 # Note: column names/order must be the same as those in 
-# 'BrainOutcome_Headers.txt' for the cortical thickness in 34 FreeSurfer-parcellated 
-# regions and WMH
+# 'BrainPhenoNames.txt' containing names for the  
+# - the cortical thickness in the 68 FreeSurfer parcellated regions in the left and 
+# the right hemispheres 
+# - average thickness in the left and the right hemispheres
+# - total surface area of the left and the right hemispheres 
+# - WMH
 #
-BrainOutcome_File =  # required: name of the file containing the brain outcomes: 
+#----------------------------------------------------------------------------------------#
+BrainPheno_File =  # required: name of the file containing the brain outcomes: 
 #
+#----------------------------------------------------------------------------------------#
 #
 # Covariate files (1 or 2)
 #
 Covariates_File =    # required: name of the file containing the 'model' covariates
 CohortSpecificCovariates_File =  # file name or NA (if no cohort specific covariates exist)
+#----------------------------------------------------------------------------------------#
 
 # ----- COLUMN NAMES  ------------------------------------------------------------------ #
 # column name for ID variable for **all** 'three' types of files: 
 # BrainDataFile, MetaboDataFiles, CovDataFile
+#----------------------------------------------------------------------------------------#
 IID = 
 
 # column names for the 'model' covariates
@@ -39,10 +50,13 @@ sex =
 current_smoking = 
 hypertension = 
 type2diabetes = 
+bmi = 
 ICVorBrainVolume = 
 
 # ----- CODINGS FOR BINARY VARIABLES --------------------------------------------------- #
-# required codings for 'binary' variables to be used for stratified analyses (NA for unavailable variables)
+# required codings for 'binary' variables to be used for stratified analyses 
+# (NA for unavailable variables)
+#----------------------------------------------------------------------------------------#
 # sex
 code_male = # value for male
 code_female = # value for female

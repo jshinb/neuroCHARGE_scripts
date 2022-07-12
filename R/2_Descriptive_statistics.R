@@ -37,7 +37,7 @@ corm = cor(subset(d,select=setdiff(names(d),c("IID",cat_vars))),use="p")
 cormF = cor(subset(d,sex=="F",select=setdiff(names(d),c("IID",cat_vars))),use="p")
 cormM = cor(subset(d,sex=="M",select=setdiff(names(d),c("IID",cat_vars))),use="p")
 
-png(file.path(outdir,"correlation_matarix_brain_pheno_plots.png"),
+png(file.path(outdir,"correlation_pairwise_brainphenos_plots.png"),
     width=12, height=3.5, units="in", res=300)
 par(mfrow=c(1,3))
 # sex-combined
@@ -46,21 +46,21 @@ corrplot(corm,tl.cex=0.7,tl.col = "darkgrey",
          title = "\n\n sex-combined \n",
          #addCoef.col = "black", 
          type = "full")# save correlation matrix, too
-save(corm, file=file.path(outdir,"correlation_matrix_brain_pheno_All.Rdata"))
+save(corm, file=file.path(outdir,"correlation_matrix_brain_pheno_All.RData"))
 # female
 corrplot(cormF,tl.cex=0.7,tl.col = "darkgrey",
          bg = "White", #tl.srt = 25, 
          title = "\n\n female \n",
          #addCoef.col = "black", 
          type = "full")# save correlation matrix, too
-save(cormF, file=file.path(outdir,"correlation_matrix_brain_pheno_Female.Rdata"))
+save(cormF, file=file.path(outdir,"correlation_matrix_brain_pheno_Female.RData"))
 # male
 corrplot(cormM,tl.cex=0.7,tl.col = "darkgrey",
          bg = "White", #tl.srt = 25, 
          title = "\n\n male \n",
          #addCoef.col = "black", 
          type = "full")# save correlation matrix, too
-save(cormM, file=file.path(outdir,"correlation_matrix_brain_pheno_Male.Rdata"))
+save(cormM, file=file.path(outdir,"correlation_matrix_brain_pheno_Male.RData"))
 dev.off()
 
 
@@ -110,8 +110,8 @@ tableOne_sex_str <- CreateTableOne(vars = tab_vars,
                                    data = d, 
                                    factorVars = cat_vars)
 
-save(tableOne_All,file=file.path(outdir,"characteristic_table.Rdata"))
-save(tableOne_sex_str,file=file.path(outdir,"characteristic_table_stratified.Rdata"))
+save(tableOne_All,file=file.path(outdir,"characteristic_table.RData"))
+save(tableOne_sex_str,file=file.path(outdir,"characteristic_table_stratified.RData"))
 
 cat("Finishing obtaining descriptive statistics \n") 
 

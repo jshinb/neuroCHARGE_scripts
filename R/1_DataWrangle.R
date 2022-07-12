@@ -7,12 +7,18 @@ cat("\nStep 1: Starting reading and merging data files\n")
 
 # standardized column names
 id_name = IID
-brainpheno_names = fread("BrainOutcome_Headers.txt",header = F)$V1#fixed
-covariate_names = c(age,sex,current_smoking,hypertension,type2diabetes,ICVorBrainVolume,
-                    setdiff(names(fread(CohortSpecificCovariates_File)),IID))
+brainpheno_names = fread("BrainPhenoNames.txt",header = F)$V1#fixed
+
+cohort_specific_cov_names = c()
+if(!is.na(CohortSpecificCovariates_File)){
+  cohort_specific_cov_names = names(fread(CohortSpecificCovariates_File))
+}
+
+covariate_names = c(age,sex,current_smoking,hypertension,type2diabetes,bmi,ICVorBrainVolume,
+                    setdiff(cohort_specific_cov_names,IID))
 
 # d will include all the individuals with complete information on covariates
-d = fread(BrainOutcome_File)
+d = fread(BrainPheno_File)
 # Checking brain outcome column names ----------------------------------------
 cat("Checking brain outcome data column names \n") 
 isOK.brain_columns = (setdiff(names(d),brainpheno_names) == IID & all(brainpheno_names %in% names(d)))
@@ -21,13 +27,15 @@ if(!all(isOK.brain_columns)) {# not OK
             "-------------------------------------------------",
             setdiff(names(d),brainpheno_names)[setdiff(names(d),brainpheno_names)!=IID],
             "-------------------------------------------------",
-            "\n**Please make sure the column names of your brain outcomes in \'BrainOutcome_File\' are the same as those listed in \'BrainOutcome_Headers.txt\'.**\n",
+            "\n**Please make sure the column names of your brain outcomes in \'BrainPheno_File\' are the same as those listed in \'BrainPhenoNames.txt\'.**\n",
             sep="\n")
   stop(msg)
 }
+d_avgTH = get_means(d,IID)
 
-d = merge(d,na.omit(fread(Covariates_File)),by=IID)
-if(!is.null(CohortSpecificCovariates_File)){
+d = merge(d_avgTH,subset(d,select=c(IID,"WMH")),by=IID,all=T)
+d = merge(d,fread(Covariates_File),by=IID,all=T)
+if(!is.na(CohortSpecificCovariates_File)){
   d = merge(d,na.omit(fread(CohortSpecificCovariates_File)),by=IID)
 }
 
@@ -36,9 +44,11 @@ cat("Checking and formatting column names \n")
 
 # name vectors
 names(id_name) = "IID"
+brainpheno_names = c(fread("freesurfer_34rois.txt",header = F)$V1,"MCT","WMH")
 names(brainpheno_names) = brainpheno_names
-names(covariate_names) = c("age","sex","current_smoking","hypertension","type2diabetes","ICVorBrainVolume",#required cov
-                           setdiff(names(fread(CohortSpecificCovariates_File)),IID))# study-specific
+names(covariate_names) = c("age","sex","current_smoking","hypertension","type2diabetes",'bmi',"ICVorBrainVolume",#required cov
+                           setdiff(cohort_specific_cov_names,IID))# study-specific
+
 sel_colnames = c(id_name,brainpheno_names,covariate_names)
 # change user-specified column names to the 'standard' names
 

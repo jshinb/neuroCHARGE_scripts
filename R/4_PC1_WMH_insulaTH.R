@@ -3,9 +3,9 @@
 # Step 4: PC1 of cov-adjusted WMH and insulaTH 
 #
 #*****************************************************************************#
-cat("Step4: Starting calculation of PC1 for covariate-adjusted WMH and insular thickness.\n") 
+cat("Step4: Starting calculation of PC1 for base model covariate-adjusted WMH and insular thickness.\n") 
 
-pca_analdat = data.frame(adj_WMH,subset(adj_ctxTH,select='insula.adj'),
+pca_analdat = data.frame(adj_WMH_base,subset(adj_ctxTH_base,select='insula.adj'),
                          row.names = d$IID)
 # out1 - pca plot
 myPCA.na.omit = PCA(na.omit(pca_analdat),graph=F)
@@ -14,17 +14,19 @@ p = p + theme(panel.grid.major = element_blank(),
           plot.title=element_text(size=14, color="darkblue"),
           axis.title = element_text(size=10, color=gray(0.4),hjust=0.5))
 
-pdf(file.path(outdir, 'PCA_grach_WMH_InsuralTH.pdf'), width=6.5, height=5)
+pdf(file.path(outdir, 'PCA_graph_WMH_InsuralTH.pdf'), width=6.5, height=5)
 print(p)
 dev.off()
 
 GWAS.pheno = merge(data.frame(IID=rownames(pca_analdat),pca_analdat),
                    data.frame(IID=rownames(myPCA.na.omit$ind$coord),PC1=myPCA.na.omit$ind$coord[,1]),
                    by="IID",all.x=T)
-GWAS.pheno = GWAS.pheno %>% mutate(IID = as.numeric(IID))
+GWAS.pheno = GWAS.pheno %>% mutate(IID = as.character(IID))
 
 # creating histograms of each variable: insular TH, WMH, and PC1
-plot_d = merge(subset(d,select=c(IID,sex)),GWAS.pheno,by="IID")
+plot_d = merge(subset(d,select=c(IID,sex)) %>% mutate(IID = as.character(IID)),
+               GWAS.pheno,
+               by="IID")
 hist.WMH = plot_d %>% 
   ggplot(aes(x=WMH.adj,fill=sex)) + 
   geom_histogram( color="#e9ecef", alpha=0.4, position = 'identity' ) + 
@@ -73,8 +75,8 @@ if(sign(PCA_loadings["loading.insula.adj","Dim.1"])==1){
 
 # save the derived phenotypes: Use these derived phenotypes for GWAS analyses 
 # with study-specific covariates
-dir.create("files_for_GWAS")
-write_tsv(GWAS.pheno,file.path("files_for_GWAS","covariate_adjusted_phenotypes_for_GWAS.tsv"))
+dir.create("DataFile_for_GWAS")
+write_tsv(GWAS.pheno,file.path("DataFile_for_GWAS","covariate_adjusted_phenotypes_for_GWAS.tsv"))
 capture.output(describe(GWAS.pheno),
                file=file.path(outdir,input_specification_file), append=T)
 
