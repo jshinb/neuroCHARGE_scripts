@@ -1,14 +1,16 @@
-# WMH-ctxTH NeuroCHARGE project -----------------------------------------------
-# Date: April 27, 2022
+# WMH-ctxTH NeuroCHARGE project ----------------------------------------------#
+#
+# Date Created: July 22, 2022
 # Author: Jean Shin (jean.shin@sickkids.ca)
-# Note: some scripts are adapted from ENIGMA Brain age GWAS project
-# 2. Association tests between WMH and cortical thickness across 34 regions
 #
 #
-# ****SPECIFY INPUT FILE HERE:
+# ******************** SPECIFY INPUT FILE HERE ******************** 
 #
-input_specification_file=
 #
+input_specification_file = 
+#
+#
+# *****************************************************************
 #-----------------------------------------------------------------------------#
 
 # install/load libraries ------------------------------------------------------
@@ -36,11 +38,6 @@ outdir=paste(cohort_name,ancestry,"outputs",sep="_")
 dir.create(outdir)
 file.copy(input_specification_file,outdir)
 
-#create log file --------------------------------------------------------------
-messages=file(file.path(outdir,"all_messages.log"), open="wt")
-sink(messages, type="message")
-sink(messages, type="output")
-
 # source functions ------------------------------------------------------------
 cat("Prep: sourcing functions\n")
 source("0_functions_get_adj_ctxTH_WMH.R")
@@ -60,14 +57,10 @@ source("3c_plot_roiAssociation_results_base_vs_fullModels.R")
 source("4_PC1_WMH_insulaTH.R")
 
 # step5: ----------------------------------------------------------------------
-source("5a_roiAssociation_statistics_baseModel_AgeDeciles.R")
-source("5b_roiAssociation_statistics_fullModel_AgeDeciles.R")
+source("5_roiAssociation_statistics_baseModel_AgeDeciles.R")
 
 cat("\n# -------------------------------------------------------------------------------------- #\n",
     file=file.path(outdir,input_specification_file), append=T)
 cat("Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
 capture.output(summary(warnings()),
                file=file.path(outdir,input_specification_file), append=T)
-sink()
-closeAllConnections()
-print(readLines(file.path(outdir,"all_messages.log")))

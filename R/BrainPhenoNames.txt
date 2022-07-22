@@ -68,6 +68,4 @@ rh_transversetemporal_thickness
 rh_insula_thickness
 lh_MeanThickness_thickness
 rh_MeanThickness_thickness
-lh_WhiteSurfArea_area
-rh_WhiteSurfArea_area
 WMH

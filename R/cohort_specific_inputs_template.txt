@@ -1,5 +1,6 @@
 # ----- COHORT-SPECIFIC INFORMATION ---------------------------------------------------- #
-# Analyst/PI information for contact
+# Analyst/PI information for contact and study information: put double or single quotation
+# marks
 #----------------------------------------------------------------------------------------#
 analyst = 
 analyst_email = 
@@ -7,8 +8,6 @@ analysis_date =      # YYYY-MM-DD
 analyst_googleID = # required for uploading results to CHARGE google Drive
 PI = 
 PI_email = 
-#
-# Study information
 cohort_name = 
 ancestry = 
 FreeSurfer_version = 
