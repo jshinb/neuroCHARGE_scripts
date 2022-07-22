@@ -1,10 +1,10 @@
 #*****************************************************************************#
 #
-# Step 5: examine associations between WWH vs. ctxTH across the 34 regions
+# 5. examine associations between WWH vs. ctxTH across the 34 regions
 # adjusting for the basic covariates and cohort-specific covariates.
 #
 #*****************************************************************************#
-cat("\nStep5: Start obtaining association estimates for WMH vs. roi-ctxTH for the base model.\n")
+cat("\n5. Start obtaining association estimates for WMH vs. roi-ctxTH for the base model.\n")
 # starting -------------------------------------------------------------------- 
 
 roi.34 = setdiff(names(brainpheno_names),c("WMH"))
@@ -24,7 +24,7 @@ cov_required = covariate_names[unique(c(cov_ctxTH,cov_WMH))]
 assoc_res_cov = c()
 age_cats = unique(d$age_cat2)
 for(age_cati in age_cats){
-  di = subset(d,age_cat2 == age_cati);print(dim(analdati))
+  di = subset(d,age_cat2 == age_cati);
   for(roii in roi.34){
     analdati = subset(di,select=c(roii,'WMH','age.c','age.c2','sex',
                                  setdiff(names(cov_required),c("age","sex"))))
@@ -35,7 +35,7 @@ for(age_cati in age_cats){
     #sex-combined-interaction
     mod0 = paste0(c('WMH','age.c','age.c2',setdiff(names(cov_required),c('age','sex'))),collapse = " + ")
     mod0 = paste("y ~ sex*(",mod0,")",sep="")
-    print(mod0)
+    capture.output(mod0,file=file.path(outdir,input_specification_file), append=T)
     
     fit.assoc = lm(mod0,data=analdati,na.action = na.exclude)
     assoc_res_adj_roii = summary(fit.assoc)$coef
@@ -52,7 +52,7 @@ for(age_cati in age_cats){
     # sex-stratified
     mod0 = paste0(c('WMH','age.c','age.c2',setdiff(names(cov_required),c('age','sex'))),collapse = " + ")
     mod0 = paste("y ~ ",mod0,sep="")
-    print(mod0)
+    capture.output(mod0,file=file.path(outdir,input_specification_file), append=T)
     
     ##female
     fit.assoc = lm(mod0,data=analdati,subset=sex=="F",na.action = na.exclude)
@@ -83,7 +83,8 @@ for(age_cati in age_cats){
     # sex-combined
     mod0 = paste0(c('WMH','age.c','age.c2',setdiff(names(cov_required),c('age'))),collapse = " + ")
     mod0 = paste("y ~ ",mod0,sep="")
-    print(mod0)
+    capture.output(mod0,file=file.path(outdir,input_specification_file), append=T)
+    
     fit.assoc = lm(mod0,data=analdati,na.action = na.exclude)
     assoc_res_adj_roii = summary(fit.assoc)$coef
     terms = rownames(assoc_res_adj_roii)
@@ -158,11 +159,11 @@ print(p + theme_bw())
 dev.off()
 
 #ending message ---------------------------------------------------------------
-cat("Finished obtaining association estimates for WMH vs. roi-ctxTH in age-based deciles.\n")
+cat("\nFinished obtaining association estimates for WMH vs. roi-ctxTH under base model in age-based deciles.\n")
 
 cat("\n# -------------------------------------------------------------------------------------- #\n",
     file=file.path(outdir,input_specification_file), append=T)
-cat("Step5a - Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
+cat("Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
 capture.output(summary(warnings()),
                file=file.path(outdir,input_specification_file), append=T)
 

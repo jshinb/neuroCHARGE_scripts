@@ -1,12 +1,12 @@
 #*****************************************************************************#
 #
-# Step 3b: examine associations between WWH vs. ctxTH across the 34 regions
-# adjusting for age, sex, ICV (for WMH) and any 
-# cohort-specific covariates,as well as, 
+# 3b. Examine associations between WWH vs. ctxTH across the 34 regions for 
+# the full model: adjusting for age, sex, ICV (for WMH) and any 
+# cohort-specific covariates,as well as, the additional covariates: 
 # current smoking status, hypertension, type2 diabetes. and BMI
 #
 #*****************************************************************************#
-cat("\nStep3b: Start obtaining association estimates for WMH vs. roi-ctxTH for the full model.\n")
+cat("\n3b. Start obtaining association estimates for WMH vs. roi-ctxTH for the full model.\n")
 # starting -------------------------------------------------------------------- 
 
 roi.34 = setdiff(names(brainpheno_names),c("WMH"))
@@ -84,7 +84,7 @@ for(roii in roi.34){
            bmi = scale(bmi)[,1]/2)
   mod0 = paste0(c('WMH','age.c','age.c2',setdiff(names(cov_required),c('age','sex'))),collapse = " + ")
   mod0 = paste("y ~ sex*(",mod0,")",sep="")
-  print(mod0)
+  capture.output(mod0,file=file.path(outdir,input_specification_file), append=T)
   
   fit.assoc = lm(mod0,data=analdati,na.action = na.exclude)
   assoc_res_adj_roii = summary(fit.assoc)$coef
@@ -167,11 +167,11 @@ print(p)
 dev.off()
 
 #ending message ---------------------------------------------------------------
-cat("Finished obtaining association estimates for WMH vs. roi-ctxTH.\n")
+cat("\nFinished obtaining association estimates for WMH vs. roi-ctxTH under full model.\n")
 
 cat("\n# -------------------------------------------------------------------------------------- #\n",
     file=file.path(outdir,input_specification_file), append=T)
-cat("Step3a - Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
+cat("Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
 capture.output(summary(warnings()),
                file=file.path(outdir,input_specification_file), append=T)
 rm(p,res1,res2,res_two_methods)

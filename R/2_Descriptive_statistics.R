@@ -4,7 +4,7 @@
 #
 #*****************************************************************************#
 # Descriptive statistics ------------------------------------------------------
-cat("\nStep2: Obtaining descriptive statistics \n") 
+cat("\n2. Obtaining descriptive statistics \n") 
 
 desc_All = psych::describe(subset(d,select=-IID),IQR = T)
 desc_FemalesMales = psych::describeBy(subset(d,select=-IID),group="sex",IQR = T)
@@ -113,10 +113,9 @@ tableOne_sex_str <- CreateTableOne(vars = tab_vars,
 save(tableOne_All,file=file.path(outdir,"characteristic_table.RData"))
 save(tableOne_sex_str,file=file.path(outdir,"characteristic_table_stratified.RData"))
 
-cat("Finishing obtaining descriptive statistics \n") 
-
+cat("\nFinishing obtaining descriptive statistics.\n") 
 cat("\n# -------------------------------------------------------------------------------------- #\n",
     file=file.path(outdir,input_specification_file), append=T)
-cat("Step2 - Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
+cat("Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
 capture.output(summary(warnings()),
                file=file.path(outdir,input_specification_file), append=T)

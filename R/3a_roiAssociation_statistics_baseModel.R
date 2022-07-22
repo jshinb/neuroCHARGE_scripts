@@ -1,11 +1,11 @@
 #*****************************************************************************#
 #
-# Step 3a: examine associations between WWH vs. ctxTH across the 34 regions
+# 3a: Examine associations between WWH vs. ctxTH across the 34 regions
 # adjusting for age, sex, ICV (for WMH) and any 
 # cohort-specific covariates.
 #
 #*****************************************************************************#
-cat("\nStep3a: Start obtaining association estimates for WMH vs. roi-ctxTH for the base model.\n")
+cat("\n3a. Start obtaining association estimates for WMH vs. roi-ctxTH for the base model.\n")
 # starting -------------------------------------------------------------------- 
 
 roi.34 = setdiff(names(brainpheno_names),c("WMH"))
@@ -84,7 +84,7 @@ for(roii in roi.34){
   analdati <- analdati %>% mutate(ICVorBrainVolume = scale(ICVorBrainVolume)[,1]/2)
   mod0 = paste0(c('WMH','age.c','age.c2',setdiff(names(cov_required),c('age','sex'))),collapse = " + ")
   mod0 = paste("y ~ sex*(",mod0,")",sep="")
-  print(mod0)
+  capture.output(mod0,file=file.path(outdir,input_specification_file), append=T)
   
   fit.assoc = lm(mod0,data=analdati,na.action = na.exclude)
   assoc_res_adj_roii = summary(fit.assoc)$coef
@@ -166,11 +166,11 @@ print(p + theme_bw())
 dev.off()
 
 #ending message ---------------------------------------------------------------
-cat("Finished obtaining association estimates for WMH vs. roi-ctxTH.\n")
+cat("\nFinished obtaining association estimates for WMH vs. roi-ctxTH under base model.\n")
 
 cat("\n# -------------------------------------------------------------------------------------- #\n",
     file=file.path(outdir,input_specification_file), append=T)
-cat("Step3a - Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
+cat("Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
 capture.output(summary(warnings()),
                file=file.path(outdir,input_specification_file), append=T)
 

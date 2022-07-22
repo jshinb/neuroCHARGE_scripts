@@ -1,9 +1,9 @@
 #*****************************************************************************#
 #
-# Step 1: Wrangle data 
+# 1: Wrangle data 
 #
 #*****************************************************************************#
-cat("\nStep 1: Starting reading and merging data files\n")
+cat("\n1. Starting reading and merging data files\n")
 
 # standardized column names
 id_name = IID
@@ -73,4 +73,4 @@ d$hypertension = factor(hypertension_tmp, levels=c("no","yes"))
 d$type2diabetes = factor(type2diabetes_tmp, levels=c('no','yes'))
 rm(list=ls(pattern = '_tmp'))
 
-cat("\nStep 1: Finishing reading and merging data files\n")
+cat("\nFinishing reading and merging data files\n")

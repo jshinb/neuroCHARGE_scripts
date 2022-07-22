@@ -18,12 +18,9 @@ get_means <- function(data,ID_col){#data -> cortical thickness data
     avgTH_roi = (data[[Lh]] + data[[Rh]])/2
     avgTH = cbind(avgTH,avgTH_roi) #34 rois
   }
-  L_SA = 'lh_WhiteSurfArea_area'
-  R_SA = 'rh_WhiteSurfArea_area'
   L_TH = 'lh_MeanThickness_thickness'
   R_TH = 'rh_MeanThickness_thickness'
-  totalSA = data[[L_SA]] + data[[R_SA]]
-  global_avgTH = data[[L_TH]]*(data[[L_SA]]/totalSA) + data[[R_TH]]*(data[[R_SA]]/totalSA)
+  global_avgTH = (data[[L_TH]] + data[[R_TH]])/2
   avgTH = data.frame(avgTH, global_avgTH)
   names(avgTH) = c(ID_col,rois,"MCT")
   avgTH

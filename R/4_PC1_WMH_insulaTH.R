@@ -1,9 +1,9 @@
 #*****************************************************************************#
 #
-# Step 4: PC1 of cov-adjusted WMH and insulaTH 
+# 4: PC1 of cov-adjusted WMH and insulaTH 
 #
 #*****************************************************************************#
-cat("Step4: Starting calculation of PC1 for base model covariate-adjusted WMH and insular thickness.\n") 
+  cat("\n4. Starting calculation of PC1 for base model covariate-adjusted WMH and insular thickness.\n") 
 
 pca_analdat = data.frame(adj_WMH_base,subset(adj_ctxTH_base,select='insula.adj'),
                          row.names = d$IID)
@@ -63,27 +63,28 @@ rownames(PCA_loadings) = paste("loading",rownames(PCA_loadings),sep=".")
 PCA_res = data.frame(PCA_eigenV,t(PCA_loadings))
 save(PCA_res,file=file.path(outdir,"PCA_res.Rdata"))
 
-corm_PC = cor(subset(plot_d,select=c(WMH.adj,insula.adj,PC1)),use="p")
-save(corm_PC,file=file.path(outdir,"corm_PC.Rdata"))
-
 # sign: 
 if(sign(PCA_loadings["loading.insula.adj","Dim.1"])==1){
-  cat("\n ** Flipping sign of PC1 to be correlated -vely with insularTH and +vely with WMH.**\n",
+  cat("\n ** Flipping sign of PC1 to be correlated -vely with insularTH.**\n",
       file=file.path(outdir,input_specification_file),append=T)
   plot_d$PC1 = (-1)*plot_d$PC1
 }
+corm_PC = cor(subset(plot_d,select=c(WMH.adj,insula.adj,PC1)),use="p")
+save(corm_PC,file=file.path(outdir,"corm_PC.Rdata"))
+
 
 # save the derived phenotypes: Use these derived phenotypes for GWAS analyses 
 # with study-specific covariates
-dir.create("DataFile_for_GWAS")
-write_tsv(GWAS.pheno,file.path("DataFile_for_GWAS","covariate_adjusted_phenotypes_for_GWAS.tsv"))
+gwas_pheno_dir = paste(cohort_name,ancestry,"GWAS_file",sep="_")
+dir.create(gwas_pheno_dir)
+write_tsv(GWAS.pheno,file.path(gwas_pheno_dir,"covariate_adjusted_phenotypes_for_GWAS.tsv"))
 capture.output(describe(GWAS.pheno),
                file=file.path(outdir,input_specification_file), append=T)
 
-cat("Finishing calculation of PC1 for covariate-adjusted WMH and insular thickness.\n") 
+cat("\nFinishing calculation of PC1 for covariate-adjusted WMH and insular thickness.\n") 
 
 cat("\n# -------------------------------------------------------------------------------------- #\n",
     file=file.path(outdir,input_specification_file), append=T)
-cat("Step4 - Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
+cat("Warnings:\n",file=file.path(outdir,input_specification_file), append=T)
 capture.output(summary(warnings()),
                file=file.path(outdir,input_specification_file), append=T)
