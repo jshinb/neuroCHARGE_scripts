@@ -1,0 +1,72 @@
+# ----- COHORT-SPECIFIC INFORMATION ---------------------------------------------------- #
+# Analyst/PI information for contact and study information: put double or single quotation
+# marks
+#----------------------------------------------------------------------------------------#
+analyst = 
+analyst_email = 
+analysis_date =      # YYYY-MM-DD
+analyst_googleID = # required for uploading results to CHARGE google Drive
+PI = 
+PI_email = 
+cohort_name = 
+ancestry = 
+FreeSurfer_version = 
+
+# -----  FILES ------------------------------------------------------------------------- #
+# data file names: missing values must be coded as **NA**
+#
+# Brain phenotype file  (1 file)
+# FreeSurfer-parcellated regions and left and right hemispheres, and WMH
+# Note: column names/order must be the same as those in 
+# 'BrainPhenoNames.txt' containing names for the  
+# - the cortical thickness in the 68 FreeSurfer parcellated regions in the left and 
+# the right hemispheres 
+# - average thickness in the left and the right hemispheres
+# - total surface area of the left and the right hemispheres 
+# - WMH
+#
+#----------------------------------------------------------------------------------------#
+BrainPheno_File =  # required: name of the file containing the brain outcomes: 
+#
+#----------------------------------------------------------------------------------------#
+#
+# Covariate files (1 or 2)
+#
+Covariates_File =    # required: name of the file containing the 'model' covariates
+CohortSpecificCovariates_File =  # file name or NA (if no cohort specific covariates exist)
+#----------------------------------------------------------------------------------------#
+
+# ----- COLUMN NAMES  ------------------------------------------------------------------ #
+# column name for ID variable for **all** 'three' types of files: 
+# BrainDataFile, MetaboDataFiles, CovDataFile
+#----------------------------------------------------------------------------------------#
+IID = 
+
+# column names for the 'model' covariates
+age = 
+sex = 
+current_smoking = 
+hypertension = 
+type2diabetes = 
+bmi = 
+ICVorBrainVolume = 
+
+# ----- CODINGS FOR BINARY VARIABLES --------------------------------------------------- #
+# required codings for 'binary' variables to be used for stratified analyses 
+# (NA for unavailable variables)
+#----------------------------------------------------------------------------------------#
+# sex
+code_male = # value for male
+code_female = # value for female
+
+# current smoking status
+code_current_smoking_yes = # value if a current smoker
+code_current_smoking_no = # value if not a current smoker
+
+# hypertension-status
+code_hypertensive_yes = # value for 'hypertensive' individual
+code_hypertensive_no =  # value for 'non-hypertensive' individual
+
+# type2 diabetes-status
+code_t2d_yes = # value for individual with T2D
+code_t2d_no = # value for individual without T2D
