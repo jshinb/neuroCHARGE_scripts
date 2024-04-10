@@ -1,10 +1,10 @@
-#' ---
-#' title: "Formatting UK Biobank data for the refreshed data"
-#' author: "Jean Shin"
-#' date: "2024-04-09"
-#' 
-#' 
+# ---
+#title: "Formatting UK Biobank data for the refreshed data"
+#author: "Jean Shin"
+#date: "2024-04-09"
+# 
 # loading libraries and define functions --------------------------------------
+
 rm(list=ls())
 setwd("~/Library/CloudStorage/OneDrive-SickKids/Grant/NIH_2022Nov_ZP")
 
@@ -71,12 +71,16 @@ remove.outliers_grubbs <- function(dat, varnames){
   
 # d_brain + ICV ---------------------------------------------------------------
 d_brain_ICV = fread('/Users/jshin/Library/CloudStorage/OneDrive-SickKids/ukbb/data/ukb677610_d_brain_unrelated.txt')
+
 # type 2 diabetes -------------------------------------------------------------
 d_T2D = fread('/Users/jshin/Library/CloudStorage/OneDrive-SickKids/ukbb/data/SummaryDiabetesDiagnosis_baseline.txt')
+
 # bmi and covariates ----------------------------------------------------------
 d_bmi_covs = fread('/Users/jshin/Library/CloudStorage/OneDrive-SickKids/ukbb/data/ukb677610_d_bmi_covariates.txt')
+
 # apoE and geno PCs -----------------------------------------------------------
 d_geno = fread('/Users/jshin/Library/CloudStorage/OneDrive-SickKids/ukbb/data/ukb677610_d_apoE4_genoPC.txt')
+
 # brain pheno names -----------------------------------------------------------
 library(RCurl)
 BrainPhenoNames <- getURL("https://raw.githubusercontent.com/jshinb/neuroCHARGE_scripts/main/Obesity_CtxV_neuroCHARGE/BrainPhenoNames.txt")
@@ -99,4 +103,7 @@ d_brain_ICV$rh_temporalpole_volume <- NA
 col_names = c('eid',BrainPhenoNames$V1)
 d_brain_ICV = d_brain_ICV %>% dplyr::select(all_of(col_names))
 identical(names(d_brain_ICV),col_names)
-head(d_brain_ICV = d_brain_ICV %>% dplyr::select(dplyr::matches("temporalpole")))
+head(d_brain_ICV %>% dplyr::select(matches("temporalpole")))
+
+# create an html RMD file by rendering ----------------------------------------
+# rmarkdown::render("~/Documents/scripts/neuroCHARGE_scripts/Obesity_CtxV/format_ukb677610_data.R")
