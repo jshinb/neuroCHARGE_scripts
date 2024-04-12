@@ -104,6 +104,25 @@ col_names = c('eid',BrainPhenoNames$V1)
 d_brain_ICV = d_brain_ICV %>% dplyr::select(all_of(col_names))
 identical(names(d_brain_ICV),col_names)
 head(d_brain_ICV %>% dplyr::select(matches("temporalpole")))
+# write_tsv(d_brain_ICV %>% dplyr::select(matches("eid|thickness")), 
+#           "~/Downloads/d_brain_thickness.tsv")
+
+d_T2D = fread("/Users/jshin/Library/CloudStorage/OneDrive-SickKids/ukbb/data/SummaryDiabetesDiagnosis_baseline.txt")
+
+write_tsv(d_brain_ICV,"/Users/jshin/Library/CloudStorage/OneDrive-SickKids/Grant/NIH_2022Nov_ZP/neuroCHARGE_scripts/ukb677610_d_brain_ICV.txt")
+write_tsv(d_geno,"/Users/jshin/Library/CloudStorage/OneDrive-SickKids/Grant/NIH_2022Nov_ZP/neuroCHARGE_scripts/ukb677610_d_geno.txt")
+write_tsv(d_bmi_covs %>% left_join(d_T2D),
+          "/Users/jshin/Library/CloudStorage/OneDrive-SickKids/Grant/NIH_2022Nov_ZP/neuroCHARGE_scripts/ukb677610_d_bmi_covs.txt")
 
 # create an html RMD file by rendering ----------------------------------------
 # rmarkdown::render("~/Documents/scripts/neuroCHARGE_scripts/Obesity_CtxV/format_ukb677610_data.R")
+library(ggplot2)
+df = d_brain_ICV %>% dplyr::select(matches("rh_")) %>% 
+  dplyr::select(matches("thickness"))
+names(df) = str_remove(names(df))
+ggplot(stack(), aes(x = ind, y = values)) +
+  geom_boxplot()
+
+ggplot(stack(d_brain_ICV %>% dplyr::select(matches("lh_")) %>% 
+               dplyr::select(matches("thickness"))), aes(x = ind, y = values)) +
+  geom_boxplot()
