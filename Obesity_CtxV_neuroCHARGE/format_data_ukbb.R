@@ -404,7 +404,6 @@ write_tsv(d_bmi_covariates %>% dplyr::select(-mri_site),
 # genotype PC data ------------------------------------------------------------ 
 d_genoPC=fread('/Users/jshin/Library/CloudStorage/OneDrive-SickKids/ukbb_insulin_resistance/data/ukbb41449_genoPC_2023-04-10.tsv')
 head(d_genoPC)
-write_tsv(d_APOE_wiE4 %>% dplyr::rename(eid=IID) %>% left_join(d_genoPC,by="eid"),file.path(data_dir,"APOE_and_genoPCs.txt"))
 
 # create an htmp RMD file by rendering ----------------------------------------
 # rmarkdown::render("~/Library/CloudStorage/OneDrive-SickKids/Grant/NIH_2022Nov_ZP/neuroCHARGE_scripts/format_data_ukbb.R")

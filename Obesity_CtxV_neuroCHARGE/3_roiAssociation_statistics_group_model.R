@@ -7,17 +7,17 @@
 #
 #*****************************************************************************#
 op <- options(warn=1)
-
-rois = c("bankssts", "caudalanteriorcingulate", "caudalmiddlefrontal", 
-         "cuneus", "entorhinal", "fusiform", "inferiorparietal", "inferiortemporal", 
-         "isthmuscingulate", "lateraloccipital", "lateralorbitofrontal", 
-         "lingual", "medialorbitofrontal", "middletemporal", "parahippocampal", 
-         "paracentral", "parsopercularis", "parsorbitalis", "parstriangularis", 
-         "pericalcarine", "postcentral", "posteriorcingulate", "precentral", 
-         "precuneus", "rostralanteriorcingulate", "rostralmiddlefrontal", 
-         "superiorfrontal", "superiorparietal", "superiortemporal", "supramarginal", 
-         "frontalpole", "temporalpole", "transversetemporal", "insula")  
-
+if( !exists("rois") ){
+  rois = c("bankssts", "caudalanteriorcingulate", "caudalmiddlefrontal", 
+           "cuneus", "entorhinal", "fusiform", "inferiorparietal", "inferiortemporal", 
+           "isthmuscingulate", "lateraloccipital", "lateralorbitofrontal", 
+           "lingual", "medialorbitofrontal", "middletemporal", "parahippocampal", 
+           "paracentral", "parsopercularis", "parsorbitalis", "parstriangularis", 
+           "pericalcarine", "postcentral", "posteriorcingulate", "precentral", 
+           "precuneus", "rostralanteriorcingulate", "rostralmiddlefrontal", 
+           "superiorfrontal", "superiorparietal", "superiortemporal", "supramarginal", 
+           "frontalpole", "temporalpole", "transversetemporal", "insula")  
+}
 # starting -------------------------------------------------------------------- 
 cov_additional= c('current_smoking','hypertension','type2diabetes')
 roi_ctx_measurements = c(paste(rois,"volume",sep="_"),

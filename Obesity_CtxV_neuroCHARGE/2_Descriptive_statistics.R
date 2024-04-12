@@ -11,11 +11,11 @@ sink(messages, type="output")
 #1. Descriptive statistics ------------------------------------------------------
 cat("\n2. Obtaining descriptive statistics \n") 
 
-desc_All = psych::describe(subset(d,select=-IID),IQR = T)
-desc_FemalesMales = psych::describeBy(subset(d,select=-IID),group=d$sex,IQR = T)
-desc_APOE4status = psych::describeBy(subset(d,select=-IID),group=d$E4_status,IQR = T)
-desc_AgeGroup = psych::describeBy(subset(d,select=-IID),group=d$age_group,IQR = T)
-desc_BMIGroup = psych::describeBy(subset(d,select=-IID),group=d$BMI_group,IQR = T)
+desc_All = psych::describe(subset(d,select=-IID) %>% dplyr::select(where(is.numeric)),IQR = T)
+desc_FemalesMales = psych::describeBy(subset(d,select=-IID)%>% dplyr::select(where(is.numeric)),group=d$sex,IQR = T)
+desc_APOE4status = psych::describeBy(subset(d,select=-IID)%>% dplyr::select(where(is.numeric)),group=d$E4_status,IQR = T)
+desc_AgeGroup = psych::describeBy(subset(d,select=-IID)%>% dplyr::select(where(is.numeric)),group=d$age_group,IQR = T)
+desc_BMIGroup = psych::describeBy(subset(d,select=-IID)%>% dplyr::select(where(is.numeric)),group=d$BMI_group,IQR = T)
 save(desc_All,
      desc_FemalesMales,
      desc_APOE4status,
@@ -32,8 +32,7 @@ descriptive_stats_discrete <- function(x,data){
   ret
 }#descriptive_stats_discrete
 
-cat_vars = rownames(desc_All)[str_detect(rownames(desc_All),"[*]")]
-cat_vars = str_remove(cat_vars,"[*]")
+cat_vars = setdiff(names(d),names(d %>% dplyr::select_if(is.numeric)))
 
 desc_All_discrete = lapply(cat_vars,descriptive_stats_discrete,data=subset(d,select = cat_vars))
 names(desc_All_discrete) = cat_vars
